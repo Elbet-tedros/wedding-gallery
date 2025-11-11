@@ -1,0 +1,443 @@
+/* src/App.css — Elegant Wedding Gallery Theme */
+
+/* Base styling */
+body {
+  font-family: "Playfair Display", serif;
+  background: linear-gradient(160deg, #fff8f0, #fefbf5);
+  margin: 0;
+  min-height: 100vh;
+  padding: 0;
+  color: #4b3a3a;
+}
+
+.app-container {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #ffffffcc;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(6px);
+}
+
+/* Headings */
+h1, h2, h3 {
+  font-family: "Great Vibes", cursive;
+  color: #c49b66;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* Section headers */
+h1 {
+  font-size: 2.5rem;
+  margin-top: 10px;
+}
+
+h2 {
+  font-size: 1.8rem;
+  color: #b1824b;
+}
+
+/* Buttons */
+button {
+  background: linear-gradient(135deg, #f7c7a3, #f3b18c);
+  color: white;
+  border: none;
+  padding: 10px 25px;
+  margin-top: 10px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-family: "Poppins", sans-serif;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background: linear-gradient(135deg, #f3b18c, #e29973);
+  transform: scale(1.05);
+}
+
+/* Upload section */
+.upload-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 25px;
+}
+
+/* File input */
+input[type="file"] {
+  border: 1px solid #e0c8b1;
+  border-radius: 10px;
+  padding: 8px;
+  background-color: #fffdfb;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Gallery styling */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+  margin-top: 35px;
+}
+
+.gallery-item {
+  background-color: #fffaf6;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  overflow: hidden;
+  text-align: center;
+  border: 1px solid #f1dfce;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.gallery-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+}
+
+/* Media */
+.gallery-item img,
+.gallery-item video {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-bottom: 1px solid #f1dfce;
+}
+
+/* Download button */
+.gallery-item a {
+  display: inline-block;
+  margin: 10px auto;
+  text-decoration: none;
+  color: white;
+  background: linear-gradient(135deg, #d6a46f, #b1824b);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.gallery-item a:hover {
+  background: linear-gradient(135deg, #b1824b, #946937);
+  transform: scale(1.05);
+}
+/* Remove button */
+.delete-btn {
+  display: inline-block;
+  margin-top: 6px;
+  margin-left: 5px;
+  background-color: #ff6b6b;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+}
+
+.delete-btn:hover {
+  background-color: #e64545;
+}
+
+/* --- Admin Dashboard Container --- */
+.admin-dashboard {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #fffdfb; /* soft cream */
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  font-family: "Playfair Display", serif;
+}
+.admin-dashboard input[type="text"]:focus {
+  outline: none;
+  border-color: #c49b66;
+  box-shadow: 0 0 6px rgba(196,155,102,0.4);
+}
+
+
+/* --- Dashboard Title --- */
+.admin-dashboard h1 {
+  text-align: center;
+  font-family: "Great Vibes", cursive;
+  font-size: 2.5rem;
+  color: #c49b66; /* gold accent */
+  margin-bottom: 30px;
+}
+
+
+/* --- Create Event Section --- */
+.create-event {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.create-event input[type="text"] {
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid #e0c8b1;
+  font-size: 1rem;
+  width: 250px;
+  background-color: #fffaf6;
+  outline: none;
+}
+
+.create-event input[type="text"]:focus {
+  border-color: #c49b66;
+  box-shadow: 0 0 5px rgba(196,155,102,0.4);
+}
+
+.create-event button {
+  background: linear-gradient(135deg, #f7c7a3, #f3b18c);
+  color: white;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 30px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.create-event button:hover {
+  background: linear-gradient(135deg, #f3b18c, #e29973);
+  transform: scale(1.05);
+}
+
+/* --- QR Card --- */
+.qr-card {
+  background-color: #fffaf6;
+  padding: 20px;
+  border-radius: 16px;
+  text-align: center;
+  border: 1px solid #f1dfce;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.qr-card h3 {
+  color: #b1824b;
+  margin-bottom: 15px;
+}
+
+.qr-card img {
+  width: 200px;
+  margin-bottom: 15px;
+  border-radius: 12px;
+}
+
+.qr-card p {
+  font-size: 1rem;
+  color: #6b5a5a;
+}
+.admin-dashboard .qr-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  transition: all 0.3s ease;
+}
+
+
+/* --- Event Page Container --- */
+.event-page {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 30px;
+  font-family: "Playfair Display", serif;
+  background-color: #fffdfb; /* soft cream */
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+.event-page h1 {
+  text-align: center;
+  font-family: "Great Vibes", cursive;
+  font-size: 2.5rem;
+  color: #c49b66; /* gold accent */
+  margin-bottom: 30px;
+}
+
+/* --- Upload Form --- */
+.upload-form {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.upload-form input[type="file"] {
+  border: 1px solid #e0c8b1;
+  border-radius: 12px;
+  padding: 10px;
+  background-color: #fffaf6;
+  font-family: "Poppins", sans-serif;
+  cursor: pointer;
+}
+
+.upload-form button {
+  background: linear-gradient(135deg, #f7c7a3, #f3b18c);
+  color: white;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 30px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.upload-form button:hover {
+  background: linear-gradient(135deg, #f3b18c, #e29973);
+  transform: scale(1.05);
+}
+
+/* --- Gallery Grid --- */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.gallery-item {
+  background-color: #fffaf6;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  overflow: hidden;
+  text-align: center;
+  border: 1px solid #f1dfce;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.gallery-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+}
+
+.gallery-item img,
+.gallery-item video {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-bottom: 1px solid #f1dfce;
+}
+
+.gallery-item a {
+  display: inline-block;
+  margin: 10px auto;
+  text-decoration: none;
+  color: white;
+  background: linear-gradient(135deg, #d6a46f, #b1824b);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.gallery-item a:hover {
+  background: linear-gradient(135deg, #b1824b, #946937);
+  transform: scale(1.05);
+}
+
+/* --- Message for no files / errors --- */
+.page-message {
+  text-align: center;
+  color: #6b5a5a;
+  font-size: 1rem;
+  margin-top: 20px;
+}
+.upload-form {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.upload-form input[type="file"] {
+  border: 1px solid #e0c8b1;
+  border-radius: 12px;
+  padding: 10px;
+  background-color: #fffaf6;
+  font-family: "Poppins", sans-serif;
+  cursor: pointer;
+}
+
+.upload-form button {
+  background: linear-gradient(135deg, #f7c7a3, #f3b18c);
+  color: white;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 30px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.upload-form button:hover {
+  background: linear-gradient(135deg, #f3b18c, #e29973);
+  transform: scale(1.05);
+}
+/* --- Gallery Grid --- */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+  margin-top: 25px;
+}
+
+/* --- Individual card --- */
+.gallery-item {
+  background-color: #fffaf6;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  overflow: hidden;
+  text-align: center;
+  border: 1px solid #f1dfce;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.gallery-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+}
+
+.gallery-item img,
+.gallery-item video {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-bottom: 1px solid #f1dfce;
+}
+
+/* --- Download button --- */
+.gallery-item a {
+  display: inline-block;
+  margin: 10px auto;
+  text-decoration: none;
+  color: white;
+  background: linear-gradient(135deg, #d6a46f, #b1824b);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.gallery-item a:hover {
+  background: linear-gradient(135deg, #b1824b, #946937);
+  transform: scale(1.05);
+}
+
+/* --- Message for empty gallery --- */
+.page-message {
+  text-align: center;
+  font-size: 1rem;
+  color: #6b5a5a;
+  margin-top: 20px;
+}
+

@@ -1,0 +1,17 @@
+/* src/index.css — Base Reset + Soft Background */
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: linear-gradient(180deg, #fffdfb 0%, #fdf5ef 100%);
+  color: #4b3a3a;
+  font-family: "Playfair Display", serif;
+}

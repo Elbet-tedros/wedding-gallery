@@ -5,6 +5,7 @@ const os = require("os");
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
+const archiver = require("archiver");
 
 const app = express();
 const PORT = 5000;
@@ -38,9 +39,39 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage });
+const upload = multer({
+  storage,
+  fileFilter: (req, file, cb) => {
+    const allowedTypes = ["image/jpeg", "image/png", "image/gif", "video/mp4", "video/webm", "video/ogg"];
+    if (allowedTypes.includes(file.mimetype)) {
+      cb(null, true);
+    } else {
+      cb(new Error("Only images and videos are allowed"));
+    }
+  },
+});
+
 
 // --- Routes ---
+app.get("/api/uploads/:eventId/download", (req, res) => {
+  const eventId = req.params.eventId;
+  const dir = path.join(__dirname, "uploads", eventId);
+
+  if (!fs.existsSync(dir)) {
+    return res.status(404).json({ error: "No files found for this event" });
+  }
+
+  res.setHeader("Content-Type", "application/zip");
+  res.setHeader(
+    "Content-Disposition",
+    `attachment; filename=event-${eventId}-files.zip`
+  );
+
+  const archive = archiver("zip", { zlib: { level: 9 } });
+  archive.pipe(res);
+  archive.directory(dir, false); // add files in the folder
+  archive.finalize();
+});
 
 // Create event
 app.post("/api/events/create", async (req, res) => {
@@ -79,12 +110,19 @@ app.get("/api/uploads/:eventId", (req, res) => {
   const eventId = req.params.eventId;
   const dir = path.join(__dirname, "uploads", eventId);
   if (!fs.existsSync(dir)) return res.json([]);
-  const files = fs.readdirSync(dir).map((file) => ({
+ // New version with uploadedAt timestamp
+const files = fs.readdirSync(dir).map((file) => {
+  const stats = fs.statSync(path.join(dir, file));
+  return {
     url: `/uploads/${eventId}/${file}`,
     name: file,
-  }));
+    uploadedAt: stats.birthtime.toISOString() // convert to ISO string
+  };
+});
+
   res.json(files);
 });
+
 // Get event info by ID
 app.get("/api/events/:eventId", (req, res) => {
   const { eventId } = req.params;
@@ -92,6 +130,24 @@ app.get("/api/events/:eventId", (req, res) => {
   if (!event) return res.status(404).json({ error: "Event not found" });
   res.json({ id: event.id, name: event.name });
 });
+// Get files for event
+app.get("/api/uploads/:eventId", (req, res) => {
+  const eventId = req.params.eventId;
+  const dir = path.join(__dirname, "uploads", eventId);
+  if (!fs.existsSync(dir)) return res.json([]);
+
+  const files = fs.readdirSync(dir).map((file) => {
+    const stats = fs.statSync(path.join(dir, file));
+    return {
+      url: `/uploads/${eventId}/${file}`,
+      name: file,
+      uploadedAt: stats.birthtime // <-- add this line
+    };
+  });
+
+  res.json(files);
+});
+
 
 
 // Delete a file
@@ -112,3 +168,19 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+// Delete event entirely
+app.delete("/api/events/:eventId", (req, res) => {
+  const eventId = req.params.eventId;
+
+  // Remove from in-memory events
+  if (events[eventId]) delete events[eventId];
+
+  // Remove uploaded files folder
+  const dir = path.join(__dirname, "uploads", eventId);
+  if (fs.existsSync(dir)) {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+
+  res.json({ message: "Event deleted successfully" });
+});
+

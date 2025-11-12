@@ -7,36 +7,39 @@ function UploadForm({ eventId, onUpload }) {
   const [files, setFiles] = useState([]);
 
   const handleUpload = async () => {
-    if (!files || files.length === 0) return alert("Please select files");
+  if (!files || files.length === 0) return alert("Please select file(s)");
 
-    const formData = new FormData();
-    files.forEach(f => formData.append("files", f));
+  const formData = new FormData();
+  files.forEach((file) => formData.append("files", file));
 
-    try {
-      const res = await fetch(`${API_BASE}/api/uploads/${eventId}`, {
-        method: "POST",
-        body: formData,
-      });
+  try {
+    const res = await fetch(`${API_BASE}/api/uploads/${eventId}`, {
+      method: "POST",
+      body: formData,
+    });
 
-      if (!res.ok) throw new Error("Upload failed");
+    if (!res.ok) throw new Error("Upload failed");
 
-      await res.json();
-      alert("Upload successful!");
-      setFiles([]); // reset file input
-      if (onUpload) onUpload(); // refresh gallery
-    } catch (err) {
-      console.error(err);
-      alert("Error uploading files");
-    }
-  };
+    await res.json();
+    alert("Upload successful!");
+    setFiles([]); // reset file input
+    if (onUpload) onUpload(); // refresh gallery
+  } catch (err) {
+    console.error(err);
+    alert("Only images or videos are allowed!");
+  }
+};
+
 
   return (
     <div className="upload-form">
       <input
-        type="file"
-        multiple
-        onChange={(e) => setFiles([...e.target.files])}
-      />
+  type="file"
+  accept="image/*,video/*"
+  multiple
+  onChange={(e) => setFiles(Array.from(e.target.files))}
+/>
+
       <button onClick={handleUpload}>
         Upload
       </button>

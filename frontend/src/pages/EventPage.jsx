@@ -12,15 +12,23 @@ function EventPage() {
 
   // Fetch uploaded files
   const fetchFiles = async () => {
-    if (!eventId) return;
-    try {
-      const res = await fetch(`${API_BASE}/api/uploads/${eventId}`);
-      const data = await res.json();
-      setFiles(data);
-    } catch (err) {
-      console.error("Error fetching files:", err);
-    }
-  };
+  if (!eventId) return;
+  try {
+    const res = await fetch(`${API_BASE}/api/uploads/${eventId}`);
+    const data = await res.json();
+    
+    // Automatically sort by newest first
+    const sortedFiles = data.sort((a, b) => {
+      const dateA = new Date(a.uploadedAt);
+      const dateB = new Date(b.uploadedAt);
+      return dateB - dateA; // newest first
+    });
+
+    setFiles(sortedFiles);
+  } catch (err) {
+    console.error("Error fetching files:", err);
+  }
+};
 
   // Fetch event info
   const fetchEvent = async () => {
@@ -45,9 +53,39 @@ function EventPage() {
   if (!eventId) return <p>Invalid event. Please scan the QR code.</p>;
 
   return (
+    
     <div className="event-page">
+      
       <h1>{eventName}'s Gallery</h1> {/* <-- modified title */}
+      <button
+  className="download-all-btn"
+  onClick={() => {
+    window.open(`${API_BASE}/api/uploads/${eventId}/download`, "_blank");
+  }}
+>
+  Download All
+</button>
+
       <UploadForm eventId={eventId} onUpload={fetchFiles} />
+      <div className="sort-filter">
+  <label>Sort by: </label>
+  <select
+    onChange={(e) => {
+      const value = e.target.value;
+      const sortedFiles = [...files].sort((a, b) => {
+  const dateA = new Date(a.uploadedAt);
+  const dateB = new Date(b.uploadedAt);
+  return value === "newest" ? dateB - dateA : dateA - dateB;
+});
+
+      setFiles(sortedFiles);
+    }}
+  >
+    <option value="newest">Newest</option>
+    <option value="oldest">Oldest</option>
+  </select>
+</div>
+
       <EventGallery files={files} eventId={eventId} onDelete={fetchFiles} />
     </div>
   );

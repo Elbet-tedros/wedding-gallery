@@ -440,4 +440,88 @@ input[type="file"] {
   color: #6b5a5a;
   margin-top: 20px;
 }
+/* Sort/Filter Dropdown */
+.sort-filter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  justify-content: flex-end; /* aligns dropdown to the right */
+}
 
+.sort-filter label {
+  font-size: 1rem;
+  color: #6b5a5a;
+  font-weight: 500;
+}
+
+.sort-filter select {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid #e0c8b1;
+  font-size: 1rem;
+  font-family: "Poppins", sans-serif;
+  background-color: #fffdfb;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sort-filter select:hover {
+  border-color: #c49b66;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.sort-filter select:focus {
+  outline: none;
+  border-color: #b1824b;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+.download-all-btn {
+  background: linear-gradient(135deg, #f7c7a3, #f3b18c);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 30px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+}
+
+.download-all-btn:hover {
+  background: linear-gradient(135deg, #f3b18c, #e29973);
+  transform: scale(1.05);
+}
+.admin-dashboard .download-qr {
+  background: linear-gradient(135deg, #c49b66, #b1824b);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 25px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+.admin-dashboard .download-qr:hover {
+  background: linear-gradient(135deg, #b1824b, #a16e44);
+  transform: scale(1.05);
+}
+.admin-dashboard .delete-event {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 25px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  margin-left: 10px;
+}
+
+.admin-dashboard .delete-event:hover {
+  background: linear-gradient(135deg, #c0392b, #a93226);
+  transform: scale(1.05);
+}

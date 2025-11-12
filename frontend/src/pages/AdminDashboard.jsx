@@ -49,6 +49,39 @@ function AdminDashboard() {
           <h3>QR Code for Event ID: {eventId}</h3>
           <img src={qrCodeURL} alt="QR Code" />
           <p>Guests can scan this QR code to access the event page.</p>
+          <button
+      className="download-qr"
+      onClick={() => {
+        const link = document.createElement("a");
+        link.href = qrCodeURL;
+        link.download = `Event-${eventId}-QR.png`;
+        link.click();
+      }}
+    >
+      Download QR Code
+    </button>
+    <button
+  className="delete-event"
+  onClick={async () => {
+    if (!window.confirm("Are you sure you want to delete this event?")) return;
+
+    try {
+      const res = await fetch(`${API_BASE}/api/events/${eventId}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      alert(data.message);
+      setQrCodeURL("");
+      setEventId("");
+    } catch (err) {
+      console.error(err);
+      alert("Failed to delete event");
+    }
+  }}
+>
+  Delete Event
+</button>
+
         </div>
       )}
     </div>

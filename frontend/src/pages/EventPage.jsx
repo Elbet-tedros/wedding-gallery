@@ -67,24 +67,6 @@ function EventPage() {
 </button>
 
       <UploadForm eventId={eventId} onUpload={fetchFiles} />
-      <div className="sort-filter">
-  <label>Sort by: </label>
-  <select
-    onChange={(e) => {
-      const value = e.target.value;
-      const sortedFiles = [...files].sort((a, b) => {
-  const dateA = new Date(a.uploadedAt);
-  const dateB = new Date(b.uploadedAt);
-  return value === "newest" ? dateB - dateA : dateA - dateB;
-});
-
-      setFiles(sortedFiles);
-    }}
-  >
-    <option value="newest">Newest</option>
-    <option value="oldest">Oldest</option>
-  </select>
-</div>
 
       <EventGallery files={files} eventId={eventId} onDelete={fetchFiles} />
     </div>

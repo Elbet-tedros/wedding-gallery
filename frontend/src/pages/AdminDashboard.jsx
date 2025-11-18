@@ -60,6 +60,16 @@ function AdminDashboard() {
     >
       Download QR Code
     </button>
+    {/* Link button to Event Page */}
+    <button
+      className="open-event"
+      onClick={() => {
+        window.open(`/event/${eventId}`, "_blank"); // opens EventPage
+      }}
+    >
+      Open Event Page
+    </button>
+
     <button
   className="delete-event"
   onClick={async () => {

@@ -79,8 +79,11 @@ app.post("/api/events/create", async (req, res) => {
   if (!name) return res.status(400).json({ error: "Event name required" });
 
   const id = Date.now().toString();
-  const localIP = getLocalIP();
-  const url = `http://${localIP}:5173/#/event/${id}`;
+ // server.js - inside app.post("/api/events/create")
+const LOCAL_IP = getLocalIP(); // you already have this function
+const FRONTEND_PORT = 5173; // default Vite dev server port
+
+const url = `http://${LOCAL_IP}:${FRONTEND_PORT}/event/${id}`;
 
   try {
     const qrCodeURL = await QRCode.toDataURL(url);
@@ -106,30 +109,20 @@ app.post("/api/uploads/:eventId", upload.array("files", 20), (req, res) => {
 });
 
 // Get files for event
-app.get("/api/uploads/:eventId", (req, res) => {
-  const eventId = req.params.eventId;
-  const dir = path.join(__dirname, "uploads", eventId);
-  if (!fs.existsSync(dir)) return res.json([]);
- // New version with uploadedAt timestamp
-const files = fs.readdirSync(dir).map((file) => {
-  const stats = fs.statSync(path.join(dir, file));
-  return {
-    url: `/uploads/${eventId}/${file}`,
-    name: file,
-    uploadedAt: stats.birthtime.toISOString() // convert to ISO string
-  };
-});
-
-  res.json(files);
-});
-
-// Get event info by ID
+// Get event info
 app.get("/api/events/:eventId", (req, res) => {
-  const { eventId } = req.params;
-  const event = events[eventId]; // from in-memory storage
-  if (!event) return res.status(404).json({ error: "Event not found" });
-  res.json({ id: event.id, name: event.name });
+  const eventId = req.params.eventId;
+
+  if (!events[eventId]) {
+    return res.status(404).json({ error: "Event not found" });
+  }
+
+  res.json(events[eventId]);
 });
+
+
+ 
+
 // Get files for event
 app.get("/api/uploads/:eventId", (req, res) => {
   const eventId = req.params.eventId;
@@ -161,13 +154,6 @@ app.delete("/api/uploads/:eventId/:filename", (req, res) => {
   fs.unlinkSync(filePath);
   res.json({ success: true });
 });
-
-// Serve uploaded files statically
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
 // Delete event entirely
 app.delete("/api/events/:eventId", (req, res) => {
   const eventId = req.params.eventId;
@@ -182,5 +168,12 @@ app.delete("/api/events/:eventId", (req, res) => {
   }
 
   res.json({ message: "Event deleted successfully" });
+});
+
+// Serve uploaded files statically
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
 
